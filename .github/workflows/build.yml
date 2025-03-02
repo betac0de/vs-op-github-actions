@@ -7,19 +7,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup core tools
-        uses: ./.github/actions/setup-tools
+        uses: .github/actions/setup-tools
         with:
           tools: "terraform,python,yq"
 
   deploy-prod:
     needs: setup
-    uses: ./.github/workflows/reusable-deploy.yml
+    uses: .github/workflows/reusable-deploy.yml
     with:
       environment: "production"
       region: "us-east-1"
 
   notify-success:
     needs: deploy-prod
-    uses: ./.github/workflows/reusable-notify.yml
+    uses: .github/workflows/reusable-notify.yml
     with:
       message: "Deployment to production succeeded!"
