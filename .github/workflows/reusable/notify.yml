@@ -9,7 +9,7 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/notify-slack
+      - uses: .github/actions/notify-slack
         with:
           message: "${{ inputs.message }}"
           status: "INFO"
