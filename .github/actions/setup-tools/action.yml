@@ -1,0 +1,43 @@
+name: "Dynamic Tool Setup"
+description: "Install tools based on input parameters"
+inputs:
+  tools:
+    description: "Comma-separated list of tools (terraform,python,yq,curl,maven)"
+    required: true
+    default: "terraform,python,yq"
+  terraform-version:
+    default: "1.5.7"
+  python-version:
+    default: "3.11"
+  maven-version:
+    default: "3.9.5"
+
+runs:
+  using: composite
+  steps:
+    - name: Install Terraform
+      if: contains(inputs.tools, 'terraform')
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ inputs.terraform-version }}
+
+    - name: Install Python
+      if: contains(inputs.tools, 'python')
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install yq
+      if: contains(inputs.tools, 'yq')
+      shell: bash
+      run: sudo apt-get install -y yq
+
+    - name: Install curl
+      if: contains(inputs.tools, 'curl')
+      shell: bash
+      run: sudo apt-get install -y curl
+
+    - name: Install Maven
+      if: contains(inputs.tools, 'maven')
+      shell: bash
+      run: sudo apt-get install -y maven

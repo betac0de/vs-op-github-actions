@@ -1,0 +1,12 @@
+name: "Run Tests"
+description: "Execute test suite with reporting"
+runs:
+  using: composite
+  steps:
+    - name: Run unit tests
+      run: pytest tests/
+      shell: bash
+
+    - name: Generate report
+      run: python .github/scripts/python/report-gen.py
+      shell: bash

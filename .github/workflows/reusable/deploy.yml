@@ -1,0 +1,21 @@
+name: Reusable Deployment
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      region:
+        default: "us-east-1"
+        type: string
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to ${{ inputs.environment }}
+        run: bash .github/scripts/bash/deploy.sh
+        env:
+          DEPLOY_ENV: ${{ inputs.environment }}
+          AWS_REGION: ${{ inputs.region }}

@@ -1,0 +1,15 @@
+name: Reusable Notification
+on:
+  workflow_call:
+    inputs:
+      message:
+        required: true
+        type: string
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/notify-slack
+        with:
+          message: "${{ inputs.message }}"
+          status: "INFO"
